@@ -3,7 +3,6 @@ package com.kritikalerror.domeatask;
 import android.support.v7.app.ActionBarActivity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -21,6 +20,9 @@ public class TaskActivity extends ActionBarActivity {
 	public static final String PREFERENCES = "TaskSettings";
 	public static final String Event = "eventKey";
 	
+	public static String ACTION_WIDGET_CONFIGURE = "WIDGET_CONFIGURED";
+	int thisWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,11 +36,6 @@ public class TaskActivity extends ActionBarActivity {
 		{
 			mEventBox.setText(mSharedPreferences.getString(Event, ""));
 		}
-		
-		// This code doesn't allow me to programmatically add a widget to the home screen
-		//Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
-	    //pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1);
-	    //startActivityForResult(pickIntent, 2);
 	}
 	
 	public void submitEventType(View view)
