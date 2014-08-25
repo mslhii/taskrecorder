@@ -8,7 +8,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.view.Gravity;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -61,6 +64,13 @@ public class TaskWidgetIntentReceiver extends BroadcastReceiver {
 
 	    context.getContentResolver().insert(Uri.parse(eventUriString), calEvent);
 	    
-	    Toast.makeText(context, "Task recorded in calendar!", Toast.LENGTH_LONG).show();
+	    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+	    Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
+	    r.play();
+	    
+	    Toast toast = Toast.makeText(context.getApplicationContext(), 
+	    		"Task recorded in calendar!", Toast.LENGTH_SHORT);
+	    toast.setGravity(Gravity.TOP, 0, 0);
+	    toast.show();
 	}
 }

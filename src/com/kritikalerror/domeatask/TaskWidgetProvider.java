@@ -36,6 +36,7 @@ public class TaskWidgetProvider extends AppWidgetProvider {
 		ComponentName myWidget = new ComponentName(context, TaskWidgetProvider.class);
 		mSharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 		
+		// Retrieve label from shared preferences
 		if (mSharedPreferences.contains(Label))
 		{
 			remoteViews.setTextViewText(R.id.widgetlabel, mSharedPreferences.getString(Label, ""));

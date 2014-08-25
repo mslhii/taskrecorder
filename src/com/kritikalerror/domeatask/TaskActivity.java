@@ -27,25 +27,6 @@ public class TaskActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task);
-		
-		mEventBox = (TextView) findViewById(R.id.editBox);
-		
-		mSharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-		
-		if (mSharedPreferences.contains(Event))
-		{
-			mEventBox.setText(mSharedPreferences.getString(Event, ""));
-		}
-	}
-	
-	public void submitEventType(View view)
-	{
-		String eventSubmit  = mEventBox.getText().toString();
-		Editor editor = mSharedPreferences.edit();
-		editor.putString(Event, eventSubmit);
-		editor.commit();
-		
-		Toast.makeText(this, "Event saved!", Toast.LENGTH_LONG).show();
 	}
 
 	@Override

@@ -67,6 +67,7 @@ public class SettingsActivity extends ActionBarActivity {
                 R.layout.widget_layout);
         remoteViews.setTextViewText(R.id.widgetlabel, mLabelBox.getText().toString().trim());
         
+        // Commit results to shared preferences to retain label name
         String labelSubmit  = mLabelBox.getText().toString().trim();
 		Editor editor = mSharedPreferences.edit();
 		editor.putString(Label, labelSubmit);
@@ -93,14 +94,6 @@ public class SettingsActivity extends ActionBarActivity {
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, thisWidgetId);
         setResult(result, resultValue);
-        
-        //RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.widget_layout);
-		//remoteViews.setOnClickPendingIntent(R.id.widget_button, buildButtonPendingIntent(this));
-		
-		//updateWidgetLabel();
-		
-		//pushWidgetUpdate(this, remoteViews);
-        
         
         finish();
     }
