@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,17 @@ public class TaskActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task);
+		
+		mGatherButton = (Button) findViewById(R.id.button1);
+		
+		mGatherButton.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+            	Toast.makeText(TaskActivity.this, "Gathering Logs!", Toast.LENGTH_SHORT).show();
+            }
+        });
 	}
 
 	@Override
