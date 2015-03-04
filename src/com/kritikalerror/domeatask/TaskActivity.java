@@ -39,6 +39,7 @@ public class TaskActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
             	Toast.makeText(TaskActivity.this, "Gathering Logs!", Toast.LENGTH_SHORT).show();
+            	gatherLogs();
             }
         });
 	}
@@ -60,5 +61,10 @@ public class TaskActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void gatherLogs()
+	{
+		
 	}
 }
