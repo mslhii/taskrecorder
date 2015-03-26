@@ -3,16 +3,9 @@ package com.kritikalerror.domeatask;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.regex.Pattern;
-
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.text.format.DateUtils;
 
 public class ReadCalendar {
     public static ArrayList<String> nameOfEvent = new ArrayList<String>();
@@ -25,24 +18,23 @@ public class ReadCalendar {
                 .query(
                         Uri.parse("content://com.android.calendar/events"),
                         new String[] { "calendar_id", "title", "description",
-                                "dtstart", "dtend", "eventLocation" }, null,
-                        null, null);
+                                "dtstart", "dtend", "eventLocation" }, null, null, null);
         cursor.moveToFirst();
-        // fetching calendars name
-        String CNames[] = new String[cursor.getCount()];
+        // Get calendar name
+        String cNames[] = new String[cursor.getCount()];
 
-        // fetching calendars id
+        // Get calendar ID
         nameOfEvent.clear();
         startDates.clear();
         endDates.clear();
         descriptions.clear();
-        for (int i = 0; i < CNames.length; i++) {
+        for (int i = 0; i < cNames.length; i++) {
 
             nameOfEvent.add(cursor.getString(1));
             startDates.add(getDate(Long.parseLong(cursor.getString(3))));
             endDates.add(getDate(Long.parseLong(cursor.getString(4))));
             descriptions.add(cursor.getString(2));
-            CNames[i] = cursor.getString(1);
+            cNames[i] = cursor.getString(1);
             cursor.moveToNext();
 
         }

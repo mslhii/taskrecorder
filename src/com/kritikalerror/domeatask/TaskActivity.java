@@ -1,11 +1,14 @@
 package com.kritikalerror.domeatask;
 
+import java.util.ArrayList;
+
 import android.support.v7.app.ActionBarActivity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +19,10 @@ import android.widget.Toast;
 
 public class TaskActivity extends ActionBarActivity {
 	
-	SharedPreferences mSharedPreferences;
-	TextView mEventBox;
-	Button mGatherButton;
+	private SharedPreferences mSharedPreferences;
+	private TextView mEventBox;
+	private Button mGatherButton;
+	private TextView mLogText;
 	
 	public static final String PREFERENCES = "TaskSettings";
 	public static final String Event = "eventKey";
@@ -26,20 +30,30 @@ public class TaskActivity extends ActionBarActivity {
 	public static String ACTION_WIDGET_CONFIGURE = "WIDGET_CONFIGURED";
 	int thisWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 	
+	private ArrayList<String> mCalendarDates;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task);
 		
-		mGatherButton = (Button) findViewById(R.id.button1);
+		mLogText = (TextView) findViewById(R.id.textView3);
 		
+		mGatherButton = (Button) findViewById(R.id.button1);
 		mGatherButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
             	Toast.makeText(TaskActivity.this, "Gathering Logs!", Toast.LENGTH_SHORT).show();
-            	gatherLogs();
+            	mCalendarDates = ReadCalendar.readCalendarEvent(getApplicationContext());
+            	mLogText.setText("Events found over all time: " + Integer.toString(mCalendarDates.size()));
+            	
+            	//DEBUG ONLY, REMOVE LATER
+            	for(String dates : mCalendarDates)
+            	{
+            		Log.e("CALENDAR", dates);
+            	}
             }
         });
 	}
@@ -61,10 +75,5 @@ public class TaskActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-	
-	private void gatherLogs()
-	{
-		
 	}
 }
