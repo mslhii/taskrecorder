@@ -39,7 +39,8 @@ public class ReadCalendar {
         	calendarId = cursor.getInt(0);
         	
         	// If event name has "YES!" in it, it's ours
-        	if(cursor.getString(1).indexOf("YES!") != 0)
+        	//TODO: add this filtering to query
+        	if(cursor.getString(1).indexOf("YES!") != -1)
         	{
 	            nameOfEvent.add(cursor.getString(1));
 	            startDates.add(getDate(Long.parseLong(cursor.getString(3))));

@@ -246,11 +246,12 @@ int id action_context_bar 0x7f06001d
 int id action_menu_divider 0x7f060016
 int id action_menu_presenter 0x7f060017
 int id action_mode_close_button 0x7f060024
-int id action_settings 0x7f06004a
+int id action_settings 0x7f06004b
 int id activity_chooser_view_content 0x7f060025
 int id always 0x7f06000b
 int id beginning 0x7f060011
 int id button1 0x7f060045
+int id button2 0x7f060047
 int id cancelbutton 0x7f060044
 int id checkbox 0x7f06002d
 int id collapseActionView 0x7f06000d
@@ -305,10 +306,10 @@ int id title 0x7f06002b
 int id top_action_bar 0x7f060020
 int id up 0x7f060021
 int id useLogo 0x7f060003
-int id widget_button 0x7f060048
-int id widget_root 0x7f060047
+int id widget_button 0x7f060049
+int id widget_root 0x7f060048
 int id widgetid 0x7f060042
-int id widgetlabel 0x7f060049
+int id widgetlabel 0x7f06004a
 int id withText 0x7f06000c
 int integer abc_max_action_buttons 0x7f0a0000
 int layout abc_action_bar_decor 0x7f030000
