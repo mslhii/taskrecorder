@@ -22,6 +22,7 @@ public class TaskActivity extends ActionBarActivity {
 	private SharedPreferences mSharedPreferences;
 	private TextView mEventBox;
 	private Button mGatherButton;
+	private Button mDeleteButton;
 	private TextView mLogText;
 	
 	public static final String PREFERENCES = "TaskSettings";
@@ -54,6 +55,17 @@ public class TaskActivity extends ActionBarActivity {
             	{
             		Log.e("CALENDAR", dates);
             	}
+            }
+        });
+		
+		mDeleteButton = (Button) findViewById(R.id.button2);
+		mDeleteButton.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+            	Toast.makeText(TaskActivity.this, "Deleting Logs!", Toast.LENGTH_SHORT).show();
+            	ReadCalendar.deleteAllEvents(getApplicationContext());
             }
         });
 	}
