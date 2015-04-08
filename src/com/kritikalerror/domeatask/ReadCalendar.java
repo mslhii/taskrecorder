@@ -21,11 +21,13 @@ public class ReadCalendar {
     final protected static String CALENDAR_URI = "content://com.android.calendar/events";
 
     public static ArrayList<String> readCalendarEvent(Context context) {
+    	// If event name has "YES!" in it, it's ours
+    	String selection = "title LIKE ?";
         Cursor cursor = context.getContentResolver()
                 .query(
                         Uri.parse(CALENDAR_URI),
                         new String[] { "calendar_id", "title", "description",
-                                "dtstart", "dtend", "eventLocation" }, null, null, null);
+                                "dtstart", "dtend", "eventLocation" }, selection, new String[]{"YES!%"}, null);
         cursor.moveToFirst();
         // Get calendar name
         String cNames[] = new String[cursor.getCount()];
@@ -37,17 +39,11 @@ public class ReadCalendar {
         descriptions.clear();
         for (int i = 0; i < cNames.length; i++) {
         	calendarId = cursor.getInt(0);
-        	
-        	// If event name has "YES!" in it, it's ours
-        	//TODO: add this filtering to query
-        	if(cursor.getString(1).indexOf("YES!") != -1)
-        	{
-	            nameOfEvent.add(cursor.getString(1));
-	            startDates.add(getDate(Long.parseLong(cursor.getString(3))));
-	            endDates.add(getDate(Long.parseLong(cursor.getString(4))));
-	            descriptions.add(cursor.getString(2));
-	            cNames[i] = cursor.getString(1);
-        	}
+        	nameOfEvent.add(cursor.getString(1));
+            startDates.add(getDate(Long.parseLong(cursor.getString(3))));
+            endDates.add(getDate(Long.parseLong(cursor.getString(4))));
+            descriptions.add(cursor.getString(2));
+            cNames[i] = cursor.getString(1);
             cursor.moveToNext();
         }
         return nameOfEvent;
@@ -56,7 +52,8 @@ public class ReadCalendar {
     public static void deleteAllEvents(Context context) {
     	ContentResolver resolver = context.getContentResolver();
     	Cursor cursor;
-    	cursor = resolver.query(Uri.parse(CALENDAR_URI), new String[]{ "_id" }, "calendar_id=" + calendarId, null, null);
+    	String selection = "calendar_id=" + calendarId + " AND title LIKE ?";
+    	cursor = resolver.query(Uri.parse(CALENDAR_URI), new String[]{ "_id" }, selection, new String[]{"YES!%"}, null);
         while(cursor.moveToNext()) {
             long eventId = cursor.getLong(cursor.getColumnIndex("_id"));
             resolver.delete(ContentUris.withAppendedId(Uri.parse(CALENDAR_URI), eventId), null, null);
