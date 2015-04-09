@@ -20,6 +20,11 @@ public class ReadCalendar {
     
     final protected static String CALENDAR_URI = "content://com.android.calendar/events";
 
+    /**
+     * Function that gets all instances of YES! for all time
+     * @param context
+     * @return
+     */
     public static ArrayList<String> readCalendarEvent(Context context) {
     	// If event name has "YES!" in it, it's ours
     	String selection = "title LIKE ?";
@@ -28,6 +33,43 @@ public class ReadCalendar {
                         Uri.parse(CALENDAR_URI),
                         new String[] { "calendar_id", "title", "description",
                                 "dtstart", "dtend", "eventLocation" }, selection, new String[]{"YES!%"}, null);
+        cursor.moveToFirst();
+        // Get calendar name
+        String cNames[] = new String[cursor.getCount()];
+
+        // Get calendar ID
+        nameOfEvent.clear();
+        startDates.clear();
+        endDates.clear();
+        descriptions.clear();
+        for (int i = 0; i < cNames.length; i++) {
+        	calendarId = cursor.getInt(0);
+        	nameOfEvent.add(cursor.getString(1));
+            startDates.add(getDate(Long.parseLong(cursor.getString(3))));
+            endDates.add(getDate(Long.parseLong(cursor.getString(4))));
+            descriptions.add(cursor.getString(2));
+            cNames[i] = cursor.getString(1);
+            cursor.moveToNext();
+        }
+        return nameOfEvent;
+    }
+    
+    /**
+     * Overloaded function that gets number of events from a start to end date
+     * @param context
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static ArrayList<String> readCalendarEvent(Context context, String startDate, String endDate) {
+    	// If event name has "YES!" in it, it's ours
+    	String selection = "title LIKE ? AND dtstart = ? AND dtend = ?";
+        Cursor cursor = context.getContentResolver()
+                .query(
+                        Uri.parse(CALENDAR_URI),
+                        new String[] { "calendar_id", "title", "description",
+                                "dtstart", "dtend", "eventLocation" }, selection, 
+                                new String[]{"YES!%", startDate, endDate}, null);
         cursor.moveToFirst();
         // Get calendar name
         String cNames[] = new String[cursor.getCount()];
