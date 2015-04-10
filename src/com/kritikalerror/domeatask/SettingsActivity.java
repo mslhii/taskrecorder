@@ -1,6 +1,8 @@
 package com.kritikalerror.domeatask;
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -139,7 +141,6 @@ public class SettingsActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
  
     public void saveToPreferences(String file_name, String data) {
         SharedPreferences myPrefs = getSharedPreferences("Data",

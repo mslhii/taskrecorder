@@ -1,8 +1,11 @@
 package com.kritikalerror.domeatask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +27,12 @@ public class TaskActivity extends ActionBarActivity {
 	private TextView mEventBox;
 	private Button mGatherButton;
 	private Button mDeleteButton;
+	private Button mDatesButton;
 	private TextView mLogText;
+	
+	private int mSelectedYear;
+	private int mSelectedMonth;
+	private int mSelectedDay;
 	
 	public static final String PREFERENCES = "TaskSettings";
 	public static final String Event = "eventKey";
@@ -37,6 +46,11 @@ public class TaskActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task);
+		
+		Calendar calendar = Calendar.getInstance();
+    	mSelectedYear = calendar.get(Calendar.YEAR);
+    	mSelectedMonth = calendar.get(Calendar.MONTH);
+    	mSelectedDay = calendar.get(Calendar.DAY_OF_MONTH);
 		
 		mLogText = (TextView) findViewById(R.id.textView3);
 		
@@ -68,6 +82,17 @@ public class TaskActivity extends ActionBarActivity {
             	ReadCalendar.deleteAllEvents(getApplicationContext());
             }
         });
+		
+		mDatesButton = (Button) findViewById(R.id.button3);
+		mDatesButton.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+            	Toast.makeText(TaskActivity.this, "Setting dates!", Toast.LENGTH_SHORT).show();
+            	showDatePickerDialog(mSelectedYear, mSelectedMonth, mSelectedDay, mOnDateSetListener);
+            }
+        });
 	}
 
 	@Override
@@ -88,4 +113,22 @@ public class TaskActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	private DatePickerDialog showDatePickerDialog(int initialYear, 
+			int initialMonth, int initialDay, OnDateSetListener listener) {
+		DatePickerDialog dialog = new DatePickerDialog(this, listener, initialYear, initialMonth, initialDay);
+		dialog.show();
+		return dialog;
+	}
+	
+	private OnDateSetListener mOnDateSetListener = new OnDateSetListener() {
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+			mSelectedDay = dayOfMonth;
+			mSelectedMonth = monthOfYear;
+			mSelectedYear = year;
+			
+			Log.e("DATE", String.valueOf(mSelectedYear) + String.valueOf(mSelectedMonth) + String.valueOf(mSelectedDay));
+		}
+	};
 }
