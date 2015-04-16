@@ -125,8 +125,15 @@ public class TaskActivity extends ActionBarActivity {
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			mSelectedDay = dayOfMonth;
-			mSelectedMonth = monthOfYear;
+			mSelectedMonth = monthOfYear + 1;
 			mSelectedYear = year;
+			
+			// Do some fuzzy math to fix these dates
+			//String month = ((mSelectedMonth + 1) > 9) ? "" + (mSelectedMonth + 1) : "0" + (mSelectedMonth + 1);
+			//String day = ((mSelectedDay) < 10) ? "0" + mSelectedDay: "" + mSelectedDay;
+			//mSelectedMonth = Integer.getInteger(month);
+			//mSelectedDay = Integer.getInteger(day);
+			//Log.e("DATE1", month + "/" + day + "/" + mSelectedYear);
 			
 			Log.e("DATE", String.valueOf(mSelectedYear) + String.valueOf(mSelectedMonth) + String.valueOf(mSelectedDay));
 		}
