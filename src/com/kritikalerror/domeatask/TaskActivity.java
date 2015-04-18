@@ -33,6 +33,7 @@ public class TaskActivity extends ActionBarActivity {
 	private int mSelectedYear;
 	private int mSelectedMonth;
 	private int mSelectedDay;
+	private long mStartGatherTime;
 	
 	public static final String PREFERENCES = "TaskSettings";
 	public static final String Event = "eventKey";
@@ -51,6 +52,7 @@ public class TaskActivity extends ActionBarActivity {
     	mSelectedYear = calendar.get(Calendar.YEAR);
     	mSelectedMonth = calendar.get(Calendar.MONTH);
     	mSelectedDay = calendar.get(Calendar.DAY_OF_MONTH);
+    	mStartGatherTime = 0;
 		
 		mLogText = (TextView) findViewById(R.id.textView3);
 		
@@ -61,8 +63,18 @@ public class TaskActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
             	Toast.makeText(TaskActivity.this, "Gathering Logs!", Toast.LENGTH_SHORT).show();
-            	mCalendarDates = ReadCalendar.readCalendarEvent(getApplicationContext());
-            	mLogText.setText("Events found over all time: " + Integer.toString(mCalendarDates.size()));
+            	
+            	if(mStartGatherTime == 0) {
+	            	mCalendarDates = ReadCalendar.readCalendarEvent(getApplicationContext());
+	            	mLogText.setText("Events found over all time: " + Integer.toString(mCalendarDates.size()));
+            	}
+            	else
+            	{
+            		mCalendarDates = ReadCalendar.readCalendarEvent(getApplicationContext(), mStartGatherTime, System.currentTimeMillis());
+            		String displayDate = String.valueOf(mSelectedDay) + "/" + 
+	    					String.valueOf(mSelectedMonth) + "/" + String.valueOf(mSelectedYear);
+	            	mLogText.setText("Events found since " + displayDate + ": " + Integer.toString(mCalendarDates.size()));
+            	}
             	
             	//DEBUG ONLY, REMOVE LATER
             	for(String dates : mCalendarDates)
@@ -135,6 +147,8 @@ public class TaskActivity extends ActionBarActivity {
 			//mSelectedDay = Integer.getInteger(day);
 			//Log.e("DATE1", month + "/" + day + "/" + mSelectedYear);
 			
+			mStartGatherTime = ReadCalendar.getLongDate(String.valueOf(mSelectedDay) + "/" + 
+					String.valueOf(mSelectedMonth) + "/" + String.valueOf(mSelectedYear));
 			Log.e("DATE", String.valueOf(mSelectedYear) + String.valueOf(mSelectedMonth) + String.valueOf(mSelectedDay));
 		}
 	};

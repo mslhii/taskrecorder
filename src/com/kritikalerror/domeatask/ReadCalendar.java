@@ -1,8 +1,10 @@
 package com.kritikalerror.domeatask;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -61,15 +63,26 @@ public class ReadCalendar {
      * @param endDate
      * @return
      */
-    public static ArrayList<String> readCalendarEvent(Context context, String startDate, String endDate) {
+    public static ArrayList<String> readCalendarEvent(Context context, long startDate, long endDate) {
     	// If event name has "YES!" in it, it's ours
-    	String selection = "title LIKE ? AND dtstart = ? AND dtend = ?";
+    	//String selection = "title LIKE ? AND dtstart > ? AND dtend < ?";
+    	String selection = "title LIKE ?";
+    	String start = String.valueOf(startDate);
+    	//start = "08/04/2015 01:50:00 AM";
+    	String end = String.valueOf(endDate);
+    	/*
         Cursor cursor = context.getContentResolver()
                 .query(
                         Uri.parse(CALENDAR_URI),
                         new String[] { "calendar_id", "title", "description",
                                 "dtstart", "dtend", "eventLocation" }, selection, 
-                                new String[]{"YES!%", startDate, endDate}, null);
+                                new String[]{"YES!%", start, end}, null);
+        */
+    	Cursor cursor = context.getContentResolver()
+                .query(
+                        Uri.parse(CALENDAR_URI),
+                        new String[] { "calendar_id", "title", "description",
+                                "dtstart", "dtend", "eventLocation" }, selection, new String[]{"YES!%"}, null);
         cursor.moveToFirst();
         // Get calendar name
         String cNames[] = new String[cursor.getCount()];
@@ -80,12 +93,14 @@ public class ReadCalendar {
         endDates.clear();
         descriptions.clear();
         for (int i = 0; i < cNames.length; i++) {
-        	calendarId = cursor.getInt(0);
-        	nameOfEvent.add(cursor.getString(1));
-            startDates.add(getDate(Long.parseLong(cursor.getString(3))));
-            endDates.add(getDate(Long.parseLong(cursor.getString(4))));
-            descriptions.add(cursor.getString(2));
-            cNames[i] = cursor.getString(1);
+        	if(Long.parseLong(cursor.getString(3)) > startDate && Long.parseLong(cursor.getString(3)) < endDate) {
+	        	calendarId = cursor.getInt(0);
+	        	nameOfEvent.add(cursor.getString(1));
+	            startDates.add(getDate(Long.parseLong(cursor.getString(3))));
+	            endDates.add(getDate(Long.parseLong(cursor.getString(4))));
+	            descriptions.add(cursor.getString(2));
+	            cNames[i] = cursor.getString(1);
+        	}
             cursor.moveToNext();
         }
         return nameOfEvent;
@@ -109,5 +124,19 @@ public class ReadCalendar {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
+    }
+    
+    public static long getLongDate(String time) {
+    	SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+    	Date d;
+		try {
+			d = f.parse(time);
+			long milliseconds = d.getTime();
+			return milliseconds;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return 0;
     }
 }
