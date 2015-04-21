@@ -11,6 +11,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 public class ReadCalendar {
     public static ArrayList<String> nameOfEvent = new ArrayList<String>();
@@ -100,6 +101,11 @@ public class ReadCalendar {
 	            endDates.add(getDate(Long.parseLong(cursor.getString(4))));
 	            descriptions.add(cursor.getString(2));
 	            cNames[i] = cursor.getString(1);
+	            
+	            // DEBUG to check dates
+	            Log.e("QUERYDATE", cursor.getString(3));
+	            Log.e("STARTDATE", String.valueOf(startDate));
+	            Log.e("ENDDATE", String.valueOf(endDate));
         	}
             cursor.moveToNext();
         }

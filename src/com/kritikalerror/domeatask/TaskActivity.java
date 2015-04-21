@@ -72,7 +72,7 @@ public class TaskActivity extends ActionBarActivity {
             	{
             		mCalendarDates = ReadCalendar.readCalendarEvent(getApplicationContext(), mStartGatherTime, System.currentTimeMillis());
             		String displayDate = String.valueOf(mSelectedDay) + "/" + 
-	    					String.valueOf(mSelectedMonth) + "/" + String.valueOf(mSelectedYear);
+	    					String.valueOf(mSelectedMonth + 1) + "/" + String.valueOf(mSelectedYear);
 	            	mLogText.setText("Events found since " + displayDate + ": " + Integer.toString(mCalendarDates.size()));
             	}
             	
@@ -137,7 +137,7 @@ public class TaskActivity extends ActionBarActivity {
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			mSelectedDay = dayOfMonth;
-			mSelectedMonth = monthOfYear + 1;
+			mSelectedMonth = monthOfYear;
 			mSelectedYear = year;
 			
 			// Do some fuzzy math to fix these dates
@@ -148,8 +148,8 @@ public class TaskActivity extends ActionBarActivity {
 			//Log.e("DATE1", month + "/" + day + "/" + mSelectedYear);
 			
 			mStartGatherTime = ReadCalendar.getLongDate(String.valueOf(mSelectedDay) + "/" + 
-					String.valueOf(mSelectedMonth) + "/" + String.valueOf(mSelectedYear));
-			Log.e("DATE", String.valueOf(mSelectedYear) + String.valueOf(mSelectedMonth) + String.valueOf(mSelectedDay));
+					String.valueOf(mSelectedMonth + 1) + "/" + String.valueOf(mSelectedYear));
+			Log.e("DATE", String.valueOf(mSelectedYear) + String.valueOf(mSelectedMonth + 1) + String.valueOf(mSelectedDay));
 		}
 	};
 }
