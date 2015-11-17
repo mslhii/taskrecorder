@@ -1,4 +1,4 @@
 taskrecorder
 ============
 
-A simple Android button that records tasks
+A simple Android button that records tasks. Still needs product direction
