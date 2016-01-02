@@ -1,7 +1,7 @@
 taskrecorder
 ============
 
-A simple Android button that records tasks. Has two parts: Happy New Year!
+A simple Android button that records tasks. Has two parts: 
 
 Still needs product direction and UI.
 
