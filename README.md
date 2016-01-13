@@ -6,5 +6,5 @@ A simple Android button that records tasks. Has two parts: app and widget button
 Still needs product direction and UI.
 
 TODO: <br/>
-UI (add icons, elements) <br/>
+UI (add icons, elements, styles) <br/>
 Testing <br/>
