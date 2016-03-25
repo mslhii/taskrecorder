@@ -8,5 +8,5 @@ Still needs product direction and UI.
 Here are two choices the product can go:
 
 TODO: <br/>
-UI (add icons, elements, styles) <br/>
+UI (add icons, elements, styles, flow) <br/>
 Testing <br/>
